@@ -31,8 +31,8 @@ void main() {
             ),
             description: "Mijn omschrijving",
             price: 100,
-            coverImage: "",
-            images: [])));
+            coverImageURL: "",
+            imageURLs: [])));
 
     await tester.pumpWidget(ShowMeTheHouseApp(
       client: mockClient,

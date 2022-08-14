@@ -54,9 +54,10 @@ class HousePage extends StatelessWidget {
                 children: [
                   GestureDetector(
                     child: CoverImage(
-                      imageURL: house.coverImage,
+                      imageURL: house.coverImageURL,
                     ),
-                    onTap: () => _showImageGalleryDialog(context, house.images),
+                    onTap: () =>
+                        _showImageGalleryDialog(context, house.imageURLs),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
