@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:showmethehouse/domain/coordinates.dart';
+
+import '../../../../domain/coordinates.dart';
 
 class Location extends StatelessWidget {
   final double _markersSize = 80;

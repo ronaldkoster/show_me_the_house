@@ -7,6 +7,7 @@ import '../../widgets/error_retry.dart';
 import '../image_gallery/image_gallery.dart';
 import 'bloc/house_bloc.dart';
 import 'widgets/address.dart';
+import 'widgets/cover_image.dart';
 import 'widgets/description.dart';
 import 'widgets/location.dart';
 
@@ -52,7 +53,9 @@ class HousePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GestureDetector(
-                    child: Image.network(house.coverImage),
+                    child: CoverImage(
+                      imageURL: house.coverImage,
+                    ),
                     onTap: () => _showImageGalleryDialog(context, house.images),
                   ),
                   Padding(

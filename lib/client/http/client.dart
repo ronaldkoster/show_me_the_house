@@ -30,7 +30,7 @@ class HttpHousingClient implements HousingClient {
       description: houseResponse.volledigeOmschrijving ??
           "geen omschrijving beschikbaar",
       price: houseResponse.koopPrijs ?? 0,
-      coverImage: houseResponse.hoofdFoto ?? "onbekend",
+      coverImage: houseResponse.hoofdFoto ?? "",
       images: _parseOnlyLargeImages(houseResponse),
     );
   }

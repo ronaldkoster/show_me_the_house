@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
-import 'package:showmethehouse/client/client.dart';
-import 'package:showmethehouse/domain/house.dart';
+
+import '../../../../client/client.dart';
+import '../../../../domain/house.dart';
 
 class HouseBloc extends Bloc<HouseEvent, HouseState> {
   final HousingClient _client;
