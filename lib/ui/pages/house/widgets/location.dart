@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
-import '../../../../domain/coordinates.dart';
-
 class Location extends StatelessWidget {
   final double _markersSize = 80;
-  final Coordinates _coordinates;
+  final double _latitude;
+  final double _longitude;
   final double _height;
   final double _zoom;
 
   const Location(
       {Key? key,
-      required Coordinates coordinates,
+      required double latitude,
+      required double longitude,
       required double height,
       required double zoom})
-      : _coordinates = coordinates,
+      : _latitude = latitude,
+        _longitude = longitude,
         _height = height,
         _zoom = zoom,
         super(key: key);
@@ -28,8 +29,8 @@ class Location extends StatelessWidget {
         options: MapOptions(
           allowPanning: false,
           center: LatLng(
-            _coordinates.latitude,
-            _coordinates.longitude,
+            _latitude,
+            _longitude,
           ),
           zoom: _zoom,
         ),
@@ -44,8 +45,8 @@ class Location extends StatelessWidget {
                 width: _markersSize,
                 height: _markersSize,
                 point: LatLng(
-                  _coordinates.latitude,
-                  _coordinates.longitude,
+                  _latitude,
+                  _longitude,
                 ),
                 builder: (_) => const Icon(Icons.location_pin),
               ),

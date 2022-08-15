@@ -4,17 +4,20 @@ import 'package:provider/provider.dart';
 
 import '../../../client/client.dart';
 import '../../widgets/error_retry.dart';
-import '../image_gallery/image_gallery.dart';
 import 'bloc/house_bloc.dart';
 import 'widgets/address.dart';
 import 'widgets/cover_image.dart';
 import 'widgets/description.dart';
+import 'widgets/image_gallery.dart';
 import 'widgets/location.dart';
 
 class HousePage extends StatelessWidget {
   final String _houseID;
-  const HousePage({Key? key, required houseID})
-      : _houseID = houseID,
+
+  const HousePage({
+    Key? key,
+    required houseID,
+  })  : _houseID = houseID,
         super(key: key);
 
   @override
@@ -36,7 +39,7 @@ class HousePage extends StatelessWidget {
               );
             }
 
-            if (state.hasError || state.house == null) {
+            if (state.hasError || state.houseDetails == null) {
               return ErrorRetry(
                 retryPressedCallback: () {
                   context.read<HouseBloc>().add(
@@ -46,7 +49,7 @@ class HousePage extends StatelessWidget {
               );
             }
 
-            final house = state.house!;
+            final houseDetails = state.houseDetails!;
 
             return SingleChildScrollView(
               child: Column(
@@ -54,35 +57,40 @@ class HousePage extends StatelessWidget {
                 children: [
                   GestureDetector(
                     child: CoverImage(
-                      imageURL: house.coverImageURL,
+                      imageURL: houseDetails.coverImageURL,
                     ),
-                    onTap: () =>
-                        _showImageGalleryDialog(context, house.imageURLs),
+                    onTap: () => _showImageGalleryDialog(
+                        context, houseDetails.imageURLs),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Address(address: house.address),
+                        Address(
+                          street: houseDetails.street,
+                          zipcode: houseDetails.zipcode,
+                          city: houseDetails.city,
+                        ),
                         const SizedBox(
                           height: 16.0,
                         ),
                         Text(
-                          "€ ${house.price}",
+                          "€ ${houseDetails.price}",
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         const SizedBox(
                           height: 16.0,
                         ),
                         Description(
-                          description: house.description,
+                          description: houseDetails.description,
                         ),
                         const SizedBox(
                           height: 16.0,
                         ),
                         Location(
-                            coordinates: house.coordinates,
+                            latitude: houseDetails.latitude,
+                            longitude: houseDetails.longitude,
                             height: 200,
                             zoom: 16),
                       ],

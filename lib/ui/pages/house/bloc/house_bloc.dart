@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../client/client.dart';
-import '../../../../domain/house.dart';
 
 class HouseBloc extends Bloc<HouseEvent, HouseState> {
   final HousingClient _client;
@@ -11,7 +10,7 @@ class HouseBloc extends Bloc<HouseEvent, HouseState> {
         super(
           HouseState(
             hasError: false,
-            house: null,
+            houseDetails: null,
             loading: true,
           ),
         ) {
@@ -24,7 +23,22 @@ class HouseBloc extends Bloc<HouseEvent, HouseState> {
     try {
       final house = await _client.getHouse(event.houseID);
 
-      emit(state.copyWith(loading: false, house: house));
+      emit(
+        state.copyWith(
+          loading: false,
+          houseDetails: HouseDetails(
+            city: house.address.city,
+            coverImageURL: house.coverImageURL,
+            description: house.description,
+            imageURLs: house.imageURLs,
+            latitude: house.coordinates.latitude,
+            longitude: house.coordinates.longitude,
+            price: house.price,
+            street: house.address.street,
+            zipcode: house.address.zipcode,
+          ),
+        ),
+      );
     } catch (error) {
       debugPrint("could not load house from API. $error");
 
@@ -38,27 +52,51 @@ class HouseBloc extends Bloc<HouseEvent, HouseState> {
 abstract class HouseEvent {}
 
 class HouseState {
-  bool hasError;
+  final bool hasError;
   final bool loading;
-  final House? house;
+  final HouseDetails? houseDetails;
 
   HouseState({
     required final this.hasError,
-    required final this.house,
+    required final this.houseDetails,
     required final this.loading,
   });
 
   HouseState copyWith({
     final String? errorMessage,
     final bool? hasError,
-    final House? house,
+    final HouseDetails? houseDetails,
     final bool? loading,
   }) =>
       HouseState(
         hasError: hasError ?? this.hasError,
-        house: house ?? this.house,
+        houseDetails: houseDetails ?? this.houseDetails,
         loading: loading ?? this.loading,
       );
+}
+
+class HouseDetails {
+  final String description;
+  final String street;
+  final String zipcode;
+  final String city;
+  final String coverImageURL;
+  final List<String> imageURLs;
+  final int price;
+  final double latitude;
+  final double longitude;
+
+  HouseDetails({
+    required this.description,
+    required this.street,
+    required this.zipcode,
+    required this.city,
+    required this.price,
+    required this.coverImageURL,
+    required this.imageURLs,
+    required this.latitude,
+    required this.longitude,
+  });
 }
 
 class GetHouse extends HouseEvent {

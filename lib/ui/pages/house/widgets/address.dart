@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:showmethehouse/domain/address.dart' as domain;
 
 class Address extends StatelessWidget {
-  final domain.Address _address;
+  final String _street;
+  final String _zipcode;
+  final String _city;
 
-  const Address({Key? key, required domain.Address address})
-      : _address = address,
+  const Address({
+    Key? key,
+    required String street,
+    required String zipcode,
+    required city,
+  })  : _street = street,
+        _zipcode = zipcode,
+        _city = city,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        _address.street,
+        _street,
         style: Theme.of(context).textTheme.titleLarge,
       ),
       Text(
-        "${_address.zipcode} ${_address.city}",
+        "$_zipcode $_city",
         style: Theme.of(context).textTheme.caption,
       ),
     ]);
